@@ -14,7 +14,7 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-  registerUser(req);
+  registerUser(req, res);
 })
 
 
