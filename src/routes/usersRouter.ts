@@ -13,9 +13,7 @@ router.get('/:id', (req, res) => {
   res.json(id)
 })
 
-router.post('/register', (req, res) => {
-  registerUser(req, res);
-})
+router.post('/register', registerUser)
 
 
 export = router;
