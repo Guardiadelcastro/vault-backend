@@ -1,6 +1,6 @@
 import * as express from 'express';
 
-import{ registerUser } from '../controllers/userController'
+import{ registerUser, findUserByEmail } from '../controllers/usersController'
 
 const router = express.Router()
 
@@ -8,12 +8,9 @@ router.get('/', (req, res) => {
   res.json({msg: 'This gets all users'})
 })
 
-router.get('/:id', (req, res) => {
-  const id = {id: req.params.id}
-  res.json(id)
-})
+router.get('/:email', findUserByEmail);
 
-router.post('/register', registerUser)
+router.post('/register', registerUser);
 
 
 export = router;
