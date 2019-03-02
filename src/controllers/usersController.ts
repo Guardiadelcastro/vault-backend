@@ -9,7 +9,7 @@ export async function registerUser(req, res) {
       return;
     }
 
-    let user = await User.findOne({ email: email })
+    let user = await User.findOne({ email })
 
     if(user) {
       res.status(403).json({ message: 'Unable to register user' })
@@ -27,9 +27,9 @@ export async function registerUser(req, res) {
 }
 
 export async function findUserByEmail(req, res) {
-  const{ email } = req.params
-  try{
-    const user = await User.findOne({ email: email });
+  const { email } = req.params
+  try {
+    const user = await User.findOne({ email });
     res.json({user})
   } catch(err) {
     res.json({ message: 'User not found'})

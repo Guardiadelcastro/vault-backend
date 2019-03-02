@@ -4,8 +4,7 @@
   "description": "A small project to try typescript, express, ...",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "prod": "NODE_ENV=production nodemon -e ts src/server.ts",
+    "start": "ts-node ./src/server.ts",
     "dev": "nodemon",
     "lint": "tslint -p ./tsconfig.json"
   },
