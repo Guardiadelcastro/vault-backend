@@ -1,4 +1,4 @@
-import { Document, Schema, Model, model } from "mongoose";
+import { Document, Schema, Model, model, Error } from "mongoose";
 import * as bcrypt from 'bcrypt';
 
 export interface IUserModel extends Document {
@@ -9,7 +9,11 @@ export interface IUserModel extends Document {
   created: string,
   updated: string,
   movies: object,
+  comparePassword: comparePasswordFunction,
 }
+
+type comparePasswordFunction = (candidatePassword: string) => Promise<boolean>;
+
 
 const UserSchema: Schema = new Schema({
   username: { type: String, required: true, unique: true},
@@ -19,7 +23,9 @@ const UserSchema: Schema = new Schema({
   created: { type: Date, default: Date.now() },
   updated: { type: Date, default: Date.now() },
   movies: Object,
+
 });
+
 
 UserSchema.pre('save', async function hashPassword(next) {
   try {
@@ -35,6 +41,19 @@ UserSchema.pre('save', async function hashPassword(next) {
     return next(err);
   }
 });
+
+const comparePassword: comparePasswordFunction = async function(candidatePassword) {
+  try {
+    const user = this as IUserModel;
+    const compare = await bcrypt.compare(candidatePassword, user.password);
+    return compare;
+  } catch(err) {
+    console.error(err)
+  }
+};
+
+UserSchema.methods.comparePassword = comparePassword;
+
 const User: Model<IUserModel> = model<IUserModel>('users', UserSchema);
 
 export default User

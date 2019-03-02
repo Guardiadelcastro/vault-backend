@@ -5,8 +5,10 @@ import * as helmet from 'helmet';
 import * as mongoose from 'mongoose';
 
 
-import mongoConfig from './config/mongo';
 import * as users from './routes/usersRouter';
+import * as movies from './routes/moviesRouter';
+import config from './config/config'
+
 export default class Server {
 
   app: express.Application
@@ -18,7 +20,7 @@ export default class Server {
   }
 
   config() {
-    mongoose.connect(process.env.MONGODB_URL || mongoConfig.URI, mongoConfig.options)
+    mongoose.connect(config.mongodb.URI, config.mongodb.options)
       .then(() => console.log(`MongoDB is connected...`))
       .catch(err => console.error(`MongoDB connection unsccessfull due to error: ${err}`));
     this.app.set('port', process.env.PORT || 3000);
@@ -33,6 +35,7 @@ export default class Server {
   routes() {
     this.app.get('/', (req, res) => res.json({message: 'Welcome to the Vault API'}));
     this.app.use('/users', users);
+    this.app.use('/api/movies', movies);
 
     // Handle errors
     this.app.use((req, res, next) => {
