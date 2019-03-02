@@ -1,7 +1,7 @@
 import User from '../models/User';
 
 export async function registerUser(req, res) {
-  try{
+  try {
     const { username, name, email, password } = req.body;
 
     if (!username || !name || !email || !password) {
