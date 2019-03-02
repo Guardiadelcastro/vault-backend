@@ -1,7 +1,7 @@
 {
   "name": "vault-backend",
   "version": "1.0.0",
-  "description": "A small project to try typescript, express, ...",
+  "description": "A small project to try typescript, express,...",
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/server.ts",
