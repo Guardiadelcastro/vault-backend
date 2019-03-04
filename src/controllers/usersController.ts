@@ -63,18 +63,3 @@ export async function loginUser (req, res, next) {
     }
   })(req, res, next);
 }
-
-export async function checkUser(req, res) {
-  try{
-    const { email, password } = req.body;
-    const userL = await User.findOne({ email })
-    const comparedPassword = await userL.comparePassword(password)
-
-    if(!userL || !comparedPassword) {
-      throw new Error(`Couldn't check password`)
-    }
-    res.json({email, password, userL, comparedPassword})
-  } catch (err) {
-    res.json({ message: `Oops, something went wrong` })
-  }
-}
