@@ -1,6 +1,6 @@
 import * as express from 'express';
 
-import{ registerUser, findUserByEmail, loginUser } from '../controllers/usersController'
+import{ registerUser, findUserByEmail, loginUser, checkUser } from '../controllers/usersController'
 
 const router = express.Router()
 
@@ -9,6 +9,8 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:email', findUserByEmail);
+
+router.post('/check', checkUser)
 
 router.post('/register', registerUser);
 
