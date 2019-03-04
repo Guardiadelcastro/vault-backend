@@ -39,7 +39,7 @@ passport.use('login', new LocalStrategy({
 passport.use(new JWTStrategy({
   secretOrKey : config.jwt.secretOrKey,
   // we expect the user to send the token as a query paramater with the name 'secret_token'
-  jwtFromRequest : ExtractJWT.fromUrlQueryParameter('secret_token')
+  jwtFromRequest : ExtractJWT.fromAuthHeaderAsBearerToken()
 }, async (token, done) => {
   try {
     // Pass the user details to the next middleware
@@ -48,4 +48,3 @@ passport.use(new JWTStrategy({
     done(error);
   }
 }));
-

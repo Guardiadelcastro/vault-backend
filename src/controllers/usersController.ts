@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken'
 
 import User from '../models/User';
 import config from '../config/config'
-import '../config/passport';
+import '../middlewares/passport';
 
 export async function registerUser(req, res) {
   try {
@@ -53,8 +53,12 @@ export async function loginUser (req, res, next) {
         if( error ) {return next(error)}
         // Token Body
         const body = { _id: user._id, email: user.email, username: user.username };
+        // JWT options
+        const options = {
+          expiresIn: '1h'
+        }
         // Sign the JWT token and populate the payload with the body
-        const token = jwt.sign({ user: body }, config.jwt.secretOrKey);
+        const token = jwt.sign({ user: body }, config.jwt.secretOrKey, options);
         // Send back the token to the user
         return res.json({ token });
       });
@@ -64,6 +68,5 @@ export async function loginUser (req, res, next) {
   })(req, res, next);
 }
 
-export function isAuth() {
-  passport.authenticate('jwt', { session : false })
-}
+
+// TODO: ¿Renew token?
