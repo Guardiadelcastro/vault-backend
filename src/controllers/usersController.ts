@@ -63,3 +63,7 @@ export async function loginUser (req, res, next) {
     }
   })(req, res, next);
 }
+
+export function isAuth() {
+  passport.authenticate('jwt', { session : false })
+}
